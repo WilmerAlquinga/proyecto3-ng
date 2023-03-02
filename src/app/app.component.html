@@ -1,0 +1,136 @@
+<!-- <h1>Productos - Proyecto III</h1> -->
+
+<p-toast></p-toast>
+
+<p-toolbar styleClass="mb-4">
+  <ng-template pTemplate="left">
+    <!-- <button pButton type="button" icon="pi pi-plus" label="Agregar" (click)="showDialogToAdd()"></button>&nbsp;&nbsp; -->
+    <button pButton type="button" icon="pi pi-refresh" label="Actualizar" (click)="getProducts()"></button>
+  </ng-template>
+
+  <ng-template pTemplate="right">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Buscar..." />
+    </span>
+  </ng-template>
+</p-toolbar>
+
+<p-table #dt [value]="products" [(selection)]="selectedProduct" dataKey="id" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['product_id', 'product_name']">
+  <ng-template pTemplate="header">
+    <tr>
+      <!-- <th>ID</th>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Precio</th>
+      <th>Stock</th>
+      <th>Fecha de creación</th>
+      <th>Color_WSAG</th>
+      <th>Imagen_WSAG</th>
+      <th></th> -->
+      <th>Producto o Servicio</th>
+      <th>Cantidad disponible</th>
+      <th>Precio</th>
+      <th>Compañia</th>
+      <th>Color_WSAG</th>
+      <th>Imagen_WSAG</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-product>
+    <tr>
+      <!-- <td>{{product.product_id}}</td>
+      <td>{{product.product_name}}</td>
+      <td>{{product.product_description}}</td>
+      <td>{{product.product_price | currency:'USD':'symbol':'1.2-2'}}</td>
+      <td>{{product.product_stock}}</td>
+      <td>{{product.product_date | date:'dd/MM/yyyy'}}</td>
+      <td>{{product.product_color_WSAG}}</td>
+      <td>
+        {{product.product_imagen_WSAG}}
+        <!-- <img [src]="product.product_imagen_WSAG" [alt]="'Sin imagen'" width="100" class="shadow-4" /> -->
+      <!--</td>
+      <td>
+        <!-- <button pButton type="button" icon="pi pi-pencil" (click)="edit(product)"></button>&nbsp;
+        <button pButton type="button" icon="pi pi-trash" (click)="deleteConfirmation(product)"></button> -->
+      <!--</td> -->
+      <td>{{product.product_name}}</td>
+      <td>{{product.product_stock}}</td>
+      <td>{{product.product_price | currency:'USD':'symbol':'1.2-2'}}</td>
+      <td>Empresa 1</td>
+      <td>{{product.product_color_WSAG}}</td>
+      <td>{{product.product_imagen_WSAG}}</td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog header="Agregar Producto" [(visible)]="displayAddDialog" [modal]="true">
+  <ng-template pTemplate>
+    <form #addProductForm="ngForm">
+      <div class="p-field">
+        <label for="addProductName">Nombre: </label>
+        <input pInputText type="text" id="addProductName" name="addProductName" [(ngModel)]="newProduct.product_name" required>
+      </div>
+      <br>
+      <div class="p-field">
+        <label for="addProductDescription">Descripción: </label>
+        <input pInputText  id="addProductDescription" name="addProductDescription" [(ngModel)]="newProduct.product_description">
+      </div>
+      <br>
+      <div class="p-field">
+        <label for="addProductPrice">Precio: </label>
+        <input pInputText  id="addProductDescription" name="addProductDescription" [(ngModel)]="newProduct.product_price">
+        <!-- <p-inputNumber [(ngModel)]="newProduct.product_price" mode="decimal"></p-inputNumber> -->
+      </div>
+      <br>
+      <div class="p-field">
+        <label for="addProductStock">Stock: </label>
+        <input pInputText  id="addProductDescription" name="addProductDescription" [(ngModel)]="newProduct.product_stock">
+        <!-- <p-inputNumber [(ngModel)]="newProduct.product_stock" mode="decimal"></p-inputNumber> -->
+      </div>
+    </form>
+  </ng-template>
+  <p-footer>
+    <button pButton type="button" label="Guardar" (click)="save()"></button>
+    <button pButton type="button" label="Cancelar" (click)="displayAddDialog=false"></button>
+  </p-footer>
+</p-dialog>
+<p-dialog header="Editar Producto" [(visible)]="displayEditDialog" [modal]="true">
+  <ng-template pTemplate>
+    <form #editProductForm="ngForm">
+      <div class="p-field">
+        <label for="editProductName">Nombre</label>
+        <input type="text" id="editProductName" name="editProductName" [(ngModel)]="selectedProduct.product_name" required>
+      </div>
+      <div class="p-field">
+        <label for="editProductDescription">Descripción</label>
+        <textarea id="editProductDescription" name="editProductDescription" [(ngModel)]="selectedProduct.product_description"></textarea>
+      </div>
+      <div class="p-field">
+        <label for="editProductPrice">Precio</label>
+        <input type="number" id="editProductPrice" name="editProductPrice" [(ngModel)]="selectedProduct.product_price" required>
+      </div>
+      <div class="p-field">
+        <label for="editProductStock">Stock</label>
+        <input type="number" id="editProductStock" name="editProductStock" [(ngModel)]="selectedProduct.product_stock" required>
+      </div>
+    </form>
+  </ng-template>
+  <p-footer>
+    <button pButton type="button" label="Actualizar" (click)="update()"></button>
+    <button pButton type="button" label="Cancelar" (click)="displayEditDialog=false"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Confirmar Eliminación" [(visible)]="displayDeleteDialog" [modal]="true">
+  <ng-template pTemplate>
+    <p>¿Está seguro de que desea eliminar este producto?</p>
+  </ng-template>
+  <p-footer>
+    <button pButton type="button" label="Eliminar" (click)="delete()"></button>
+    <button pButton type="button" label="Cancelar" (click)="displayDeleteDialog=false"></button>
+  </p-footer>
+</p-dialog>
+
+<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<!-- <p-gmap [options]="options" [style]="{'width':'100%','height':'320px'}" ></p-gmap> -->
