@@ -1,10 +1,10 @@
-<!-- <h1>Productos - Proyecto III</h1> -->
+<h1>Productos - Empresa 3</h1>
 
 <p-toast></p-toast>
 
 <p-toolbar styleClass="mb-4">
   <ng-template pTemplate="left">
-    <!-- <button pButton type="button" icon="pi pi-plus" label="Agregar" (click)="showDialogToAdd()"></button>&nbsp;&nbsp; -->
+    <button pButton type="button" icon="pi pi-plus" label="Agregar" (click)="showDialogToAdd()"></button>&nbsp;&nbsp;
     <button pButton type="button" icon="pi pi-refresh" label="Actualizar" (click)="getProducts()"></button>
   </ng-template>
 
@@ -19,46 +19,27 @@
 <p-table #dt [value]="products" [(selection)]="selectedProduct" dataKey="id" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['product_id', 'product_name']">
   <ng-template pTemplate="header">
     <tr>
-      <!-- <th>ID</th>
+      <th>ID</th>
       <th>Nombre</th>
       <th>Descripción</th>
       <th>Precio</th>
       <th>Stock</th>
       <th>Fecha de creación</th>
-      <th>Color_WSAG</th>
-      <th>Imagen_WSAG</th>
-      <th></th> -->
-      <th>Producto o Servicio</th>
-      <th>Cantidad disponible</th>
-      <th>Precio</th>
-      <th>Compañia</th>
-      <th>Color_WSAG</th>
-      <th>Imagen_WSAG</th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-product>
     <tr>
-      <!-- <td>{{product.product_id}}</td>
+      <td>{{product.product_id}}</td>
       <td>{{product.product_name}}</td>
       <td>{{product.product_description}}</td>
       <td>{{product.product_price | currency:'USD':'symbol':'1.2-2'}}</td>
       <td>{{product.product_stock}}</td>
       <td>{{product.product_date | date:'dd/MM/yyyy'}}</td>
-      <td>{{product.product_color_WSAG}}</td>
       <td>
-        {{product.product_imagen_WSAG}}
-        <!-- <img [src]="product.product_imagen_WSAG" [alt]="'Sin imagen'" width="100" class="shadow-4" /> -->
-      <!--</td>
-      <td>
-        <!-- <button pButton type="button" icon="pi pi-pencil" (click)="edit(product)"></button>&nbsp;
-        <button pButton type="button" icon="pi pi-trash" (click)="deleteConfirmation(product)"></button> -->
-      <!--</td> -->
-      <td>{{product.product_name}}</td>
-      <td>{{product.product_stock}}</td>
-      <td>{{product.product_price | currency:'USD':'symbol':'1.2-2'}}</td>
-      <td>Empresa 1</td>
-      <td>{{product.product_color_WSAG}}</td>
-      <td>{{product.product_imagen_WSAG}}</td>
+        <button pButton type="button" icon="pi pi-pencil" (click)="edit(product)"></button>&nbsp;
+        <button pButton type="button" icon="pi pi-trash" (click)="deleteConfirmation(product)"></button>
+      </td>
     </tr>
   </ng-template>
 </p-table>
@@ -78,14 +59,12 @@
       <br>
       <div class="p-field">
         <label for="addProductPrice">Precio: </label>
-        <input pInputText  id="addProductDescription" name="addProductDescription" [(ngModel)]="newProduct.product_price">
-        <!-- <p-inputNumber [(ngModel)]="newProduct.product_price" mode="decimal"></p-inputNumber> -->
+        <p-inputNumber [(ngModel)]="newProduct.product_price" mode="decimal" inputId="addProductDescription" name="addProductDescription" [useGrouping]="false" [maxFractionDigits]="2"></p-inputNumber>
       </div>
       <br>
       <div class="p-field">
         <label for="addProductStock">Stock: </label>
-        <input pInputText  id="addProductDescription" name="addProductDescription" [(ngModel)]="newProduct.product_stock">
-        <!-- <p-inputNumber [(ngModel)]="newProduct.product_stock" mode="decimal"></p-inputNumber> -->
+        <p-inputNumber [(ngModel)]="newProduct.product_stock" mode="decimal" inputId="addProductDescription" name="addProductDescription" [useGrouping]="false"></p-inputNumber>
       </div>
     </form>
   </ng-template>
@@ -98,20 +77,20 @@
   <ng-template pTemplate>
     <form #editProductForm="ngForm">
       <div class="p-field">
-        <label for="editProductName">Nombre</label>
-        <input type="text" id="editProductName" name="editProductName" [(ngModel)]="selectedProduct.product_name" required>
-      </div>
+        <label for="editProductName">Nombre: </label>
+        <input pInputText type="text" id="editProductName" name="editProductName" [(ngModel)]="selectedProduct.product_name" required>
+      </div><br>
       <div class="p-field">
-        <label for="editProductDescription">Descripción</label>
-        <textarea id="editProductDescription" name="editProductDescription" [(ngModel)]="selectedProduct.product_description"></textarea>
-      </div>
+        <label for="editProductDescription">Descripción: </label>
+        <input pInputText  id="editProductDescription" name="editProductDescription" [(ngModel)]="selectedProduct.product_description">
+      </div><br>
       <div class="p-field">
-        <label for="editProductPrice">Precio</label>
-        <input type="number" id="editProductPrice" name="editProductPrice" [(ngModel)]="selectedProduct.product_price" required>
-      </div>
+        <label for="editProductPrice">Precio: </label>
+        <p-inputNumber [(ngModel)]="selectedProduct.product_price" mode="decimal" inputId="editProductPrice" name="editProductPrice" [useGrouping]="false" [maxFractionDigits]="2"></p-inputNumber>
+      </div><br>
       <div class="p-field">
-        <label for="editProductStock">Stock</label>
-        <input type="number" id="editProductStock" name="editProductStock" [(ngModel)]="selectedProduct.product_stock" required>
+        <label for="editProductStock">Stock: </label>
+        <p-inputNumber [(ngModel)]="selectedProduct.product_stock" mode="decimal" inputId="editProductStock" name="editProductStock" [useGrouping]="false"></p-inputNumber>
       </div>
     </form>
   </ng-template>
